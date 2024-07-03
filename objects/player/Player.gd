@@ -7,7 +7,8 @@ const walking_speed = 5.0
 const sprinting_speed = 8.0
 const crouching_speed = 3.0
 ## Gravity and jump
-const jump_velocity = 4.5
+const jump_velocity = 7
+const grav_multiplier = 2
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") # Get the gravity from the project settings to be synced with RigidBody nodes.
 ## Mouselook
 const mouse_sens = 0.3
@@ -33,7 +34,7 @@ func _physics_process(delta):
 	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= gravity * delta * grav_multiplier
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
