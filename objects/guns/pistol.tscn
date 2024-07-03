@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://mjk5otkgx08c"]
+
+[ext_resource type="PackedScene" uid="uid://dgqy35grv8syn" path="res://assets/models/PLACEHOLDER_GUN.glb" id="1_qbs5g"]
+
+[node name="pistol" instance=ExtResource("1_qbs5g")]

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://caf14cwg2obtt"]
+
+[ext_resource type="PackedScene" uid="uid://bv10hv8hiqcit" path="res://assets/models/pumpshotgun.glb" id="1_q0tf7"]
+
+[node name="pumpshotgun" instance=ExtResource("1_q0tf7")]
