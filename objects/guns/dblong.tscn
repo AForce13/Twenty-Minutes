@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3rd0j05hb0ol"]
+
+[ext_resource type="PackedScene" uid="uid://dkodvpdkagugc" path="res://assets/models/dblong.glb" id="1_dy0iw"]
+
+[node name="dblong" instance=ExtResource("1_dy0iw")]

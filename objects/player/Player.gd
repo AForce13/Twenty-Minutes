@@ -73,6 +73,25 @@ func _physics_process(delta):
 			animation_player.play("pumpsg_pull_out")
 			cur_wp = "pumpsg"
 	
+	if Input.is_action_just_pressed("mv_wp_3"):
+		if cur_wp == "dbavg":
+			animation_player.play("dbavg_hide")
+			cur_wp = "empty"
+		elif cur_wp == "dblong":
+			animation_player.play("dblong_hide")
+			cur_wp = "empty"
+		else:
+			animation_player.play("dbavg_pull_out")
+			cur_wp = "dbavg"
+	
+	if Input.is_action_just_pressed("mv_wp_swap"):
+		if cur_wp == "dbavg":
+			animation_player.play("dblong_pull_out")
+			cur_wp = "dblong"
+		elif cur_wp == "dblong":
+			animation_player.play("dbavg_pull_out")
+			cur_wp = "dbavg"
+	
 	# Shooting
 	if Input.is_action_pressed("mv_shoot"):
 		if !animation_player.is_playing():
@@ -80,5 +99,9 @@ func _physics_process(delta):
 				animation_player.play("pistol_shoot")
 			if cur_wp == "pumpsg":
 				animation_player.play("pumpsg_shoot")
+			if cur_wp == "dbavg":
+				animation_player.play("dbavg_shoot")
+			if cur_wp == "dblong":
+				animation_player.play("dblong_shoot")
 
 	move_and_slide()

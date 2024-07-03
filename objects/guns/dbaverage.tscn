@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsgaqyr5x8uut"]
+
+[ext_resource type="PackedScene" uid="uid://bgtt8prbvh41p" path="res://assets/models/dbaverage.glb" id="1_cr6jf"]
+
+[node name="dbaverage" instance=ExtResource("1_cr6jf")]
