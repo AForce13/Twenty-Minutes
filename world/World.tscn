@@ -8,25 +8,40 @@
 albedo_texture = ExtResource("1_qvmr1")
 uv1_triplanar = true
 
-[sub_resource type="Gradient" id="Gradient_4j113"]
-colors = PackedColorArray(0, 0, 0, 1, 0.111197, 0.111197, 0.111197, 1)
+[sub_resource type="Gradient" id="Gradient_ctgr6"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.0668108, 0.219054, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7vm0a"]
-gradient = SubResource("Gradient_4j113")
-fill_from = Vector2(1, 0.53125)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_igsl3"]
+gradient = SubResource("Gradient_ctgr6")
+fill_from = Vector2(1, 0.978632)
+fill_to = Vector2(1, 0.555556)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_gi673"]
-ground_color = Color(0.217381, 0.240415, 0.18786, 1)
-energy_multiplier = 2.0
-night_sky = SubResource("GradientTexture2D_7vm0a")
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4e2yn"]
+night_sky = SubResource("GradientTexture2D_igsl3")
 
 [sub_resource type="Sky" id="Sky_lsev8"]
-sky_material = SubResource("PhysicalSkyMaterial_gi673")
+sky_material = SubResource("PhysicalSkyMaterial_4e2yn")
 
 [sub_resource type="Environment" id="Environment_e1dfl"]
 background_mode = 2
 sky = SubResource("Sky_lsev8")
 tonemap_mode = 2
+
+[sub_resource type="Animation" id="Animation_kcv2l"]
+length = 7.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionalLight3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 7.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_p738x"]
 resource_name = "new_animation"
@@ -43,21 +58,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_kcv2l"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("DirectionalLight3D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8d11f"]
@@ -83,12 +83,15 @@ material = SubResource("StandardMaterial3D_xabnf")
 environment = SubResource("Environment_e1dfl")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+light_color = Color(0.468972, 0.450639, 0.278457, 1)
+light_energy = 2.0
 shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="day_night" type="AnimationPlayer" parent="Environment"]
 libraries = {
 "": SubResource("AnimationLibrary_8d11f")
 }
-autoplay = "new_animation"
+autoplay = "RESET"
 
 [node name="Player" parent="." instance=ExtResource("3_yywgp")]
