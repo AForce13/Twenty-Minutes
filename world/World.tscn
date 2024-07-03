@@ -1,34 +1,90 @@
-[gd_scene load_steps=13 format=3 uid="uid://548elmf2a5je"]
+[gd_scene load_steps=20 format=3 uid="uid://548elmf2a5je"]
 
 [ext_resource type="Script" path="res://world/World.gd" id="1_mvq5h"]
 [ext_resource type="Texture2D" uid="uid://dalc4bthgph3a" path="res://assets/textures/dev/grids/Dark/texture_07.png" id="1_qvmr1"]
+[ext_resource type="Shader" path="res://world/SkyShader.gdshader" id="3_c1onv"]
 [ext_resource type="PackedScene" uid="uid://cwrprtqydo05b" path="res://objects/player/Player.tscn" id="3_yywgp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xabnf"]
 albedo_texture = ExtResource("1_qvmr1")
 uv1_triplanar = true
 
-[sub_resource type="Gradient" id="Gradient_ctgr6"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0.0668108, 0.219054, 1)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_di0p1"]
+frequency = 0.001
+metadata/_preview_in_3d_space_ = true
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_igsl3"]
-gradient = SubResource("Gradient_ctgr6")
-fill_from = Vector2(1, 0.978632)
-fill_to = Vector2(1, 0.555556)
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kdgnu"]
+noise = SubResource("FastNoiseLite_di0p1")
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4e2yn"]
-night_sky = SubResource("GradientTexture2D_igsl3")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u4voa"]
+noise_type = 0
+frequency = 0.0043
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_thw3o"]
+seamless = true
+seamless_blend_skirt = 0.5
+noise = SubResource("FastNoiseLite_u4voa")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bm7g2"]
+seed = 25
+frequency = 0.05
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ee6v0"]
+noise = SubResource("FastNoiseLite_bm7g2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_56j4h"]
+noise_type = 2
+seed = 1258
+frequency = 0.025
+cellular_return_type = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rphsc"]
+noise = SubResource("FastNoiseLite_56j4h")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wx11b"]
+shader = ExtResource("3_c1onv")
+shader_parameter/day_bottom_color = Color(0.286275, 0.705882, 0.976471, 1)
+shader_parameter/day_top_color = Color(0.262745, 0.619608, 0.882353, 1)
+shader_parameter/sunset_bottom_color = Color(0.564706, 0.305882, 0.207843, 1)
+shader_parameter/sunset_top_color = Color(0.196078, 0.2, 0.301961, 1)
+shader_parameter/night_bottom_color = Color(0.0784314, 0.0235294, 0.0901961, 1)
+shader_parameter/night_top_color = Color(0, 0, 0, 1)
+shader_parameter/horizon_color_day = Color(0, 0.862745, 0.396078, 1)
+shader_parameter/horizon_color_sunset = Color(0.968627, 0.270588, 0.247059, 1)
+shader_parameter/horizon_color_night = Color(0.12549, 0.0941176, 0.176471, 1)
+shader_parameter/horizon_falloff = 1.0
+shader_parameter/sun_col = Color(0.365558, 0.301373, 0.0698181, 1)
+shader_parameter/sun_size = 0.15
+shader_parameter/sun_blur = 0.01
+shader_parameter/moon_col = Color(0.529067, 0.529067, 0.529066, 1)
+shader_parameter/moon_size = 0.15
+shader_parameter/moon_crescent_offset = -0.1
+shader_parameter/clouds_main_color = Color(0.473976, 0.473976, 0.473976, 1)
+shader_parameter/clouds_edge_color = Color(0.0156863, 0, 0.501961, 1)
+shader_parameter/clouds_speed = 0.01
+shader_parameter/clouds_scale = 0.18
+shader_parameter/clouds_cutoff = 0.0
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/stars_cutoff = 0.8
+shader_parameter/stars_speed = 0.005
+shader_parameter/clouds_texture = SubResource("NoiseTexture2D_ee6v0")
+shader_parameter/clouds_distort_texture = SubResource("NoiseTexture2D_kdgnu")
+shader_parameter/clouds_noise_texture = SubResource("NoiseTexture2D_thw3o")
+shader_parameter/stars_texture = SubResource("NoiseTexture2D_rphsc")
 
 [sub_resource type="Sky" id="Sky_lsev8"]
-sky_material = SubResource("PhysicalSkyMaterial_4e2yn")
+sky_material = SubResource("ShaderMaterial_wx11b")
 
 [sub_resource type="Environment" id="Environment_e1dfl"]
 background_mode = 2
 sky = SubResource("Sky_lsev8")
+ambient_light_source = 3
+reflected_light_source = 2
 tonemap_mode = 2
 
-[sub_resource type="Animation" id="Animation_kcv2l"]
-length = 7.5
+[sub_resource type="Animation" id="Animation_6v6rh"]
+resource_name = "Day_Night_Cycle"
+length = 240.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -37,16 +93,14 @@ tracks/0/path = NodePath("DirectionalLight3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 7.5),
+"times": PackedFloat32Array(0, 240),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_p738x"]
-resource_name = "new_animation"
-length = 2.0
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_afsry"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -54,16 +108,16 @@ tracks/0/path = NodePath("DirectionalLight3D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
+"values": [Vector3(0, 0, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_8d11f"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yay3f"]
 _data = {
-"RESET": SubResource("Animation_kcv2l"),
-"new_animation": SubResource("Animation_p738x")
+"Day_Night_Cycle": SubResource("Animation_6v6rh"),
+"RESET": SubResource("Animation_afsry")
 }
 
 [node name="World" type="Node3D"]
@@ -83,15 +137,11 @@ material = SubResource("StandardMaterial3D_xabnf")
 environment = SubResource("Environment_e1dfl")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-light_color = Color(0.468972, 0.450639, 0.278457, 1)
-light_energy = 2.0
-shadow_enabled = true
-directional_shadow_mode = 0
 
-[node name="day_night" type="AnimationPlayer" parent="Environment"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Environment"]
 libraries = {
-"": SubResource("AnimationLibrary_8d11f")
+"": SubResource("AnimationLibrary_yay3f")
 }
-autoplay = "RESET"
+autoplay = "Day_Night_Cycle"
 
 [node name="Player" parent="." instance=ExtResource("3_yywgp")]
