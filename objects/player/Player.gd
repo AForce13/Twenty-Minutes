@@ -84,6 +84,14 @@ func _physics_process(delta):
 			animation_player.play("dbavg_pull_out")
 			cur_wp = "dbavg"
 	
+	if Input.is_action_just_pressed("mv_wp_4"):
+		if cur_wp == "assrif":
+			animation_player.play("assrif_hide")
+			cur_wp = "empty"
+		else:
+			animation_player.play("assrif_pull_out")
+			cur_wp = "assrif"
+	
 	if Input.is_action_just_pressed("mv_wp_swap"):
 		if cur_wp == "dbavg":
 			animation_player.play("dblong_pull_out")
@@ -103,5 +111,7 @@ func _physics_process(delta):
 				animation_player.play("dbavg_shoot")
 			if cur_wp == "dblong":
 				animation_player.play("dblong_shoot")
+			if  cur_wp == "assrif":
+				animation_player.play("assrif_shoot")
 
 	move_and_slide()

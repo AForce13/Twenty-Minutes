@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1sckvx6wcoye"]
+
+[ext_resource type="PackedScene" uid="uid://cg3fxw18h14we" path="res://assets/models/assaultrifle.glb" id="1_w0u0s"]
+
+[node name="assaultrifle" instance=ExtResource("1_w0u0s")]
